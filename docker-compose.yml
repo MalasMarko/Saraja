@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  saraja:
+    image: ${DOCKER_REGISTRY-}saraja
+    build:
+      context: .
+      dockerfile: Saraja/Dockerfile
+    ports:
+      - '5000:443'
+      - '5001:80'
+  sarajadb:
+    image: mysql:5.7
+    restart: always
+    environment:
+        MYSQL_DATABASE: 'saraja'
+        MYSQL_USER: 'saraja'
+        MYSQL_PASSWORD: 'saraja123'
+        MYSQL_ROOT_PASSWORD: 'saraja123'
+    ports:
+        - '3306:3306'
+    expose:
+        - '3306'
+    volumes:
+        - my-db:/var/lib/mysql
+volumes:
+    my-db:
